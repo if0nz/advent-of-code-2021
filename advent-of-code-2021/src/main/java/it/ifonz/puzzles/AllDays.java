@@ -8,11 +8,11 @@ import it.ifonz.common.AbstractDay;
 public class AllDays {
 
 	public static void main(String[] args) throws IOException {
-		AbstractDay[] days 	= new AbstractDay[]{new Day01(), new Day02()};
+		AbstractDay[] days 	= new AbstractDay[]{new Day01(), new Day02(), new Day03()};
 		for (var d : days) {
 			var begin = Instant.now().toEpochMilli();
 			d.run();
-			System.out.println("Exec time -> "+(Instant.now().toEpochMilli()-begin)+" ms");
+			System.out.println(d.getClass().getSimpleName()+" Exec time -> "+(Instant.now().toEpochMilli()-begin)+" ms");
 		}
 	}
 	

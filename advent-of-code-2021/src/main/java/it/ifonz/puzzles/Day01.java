@@ -9,7 +9,7 @@ import it.ifonz.common.FileReader;
 
 public class Day01 extends AbstractDay {
 
-	static List<Integer> numbers;
+	public static List<Integer> numbers;
 	
 	public static void main(String[] args) throws IOException {
 		
@@ -31,7 +31,7 @@ public class Day01 extends AbstractDay {
 		System.out.println(c);
 	}
 	
-	private static int sum3(List<Integer> numbers, int i) {
+	public int sum3(List<Integer> numbers, int i) {
 		return numbers.get(i)+numbers.get(i-1)+numbers.get(i-2);
 	}
 }
