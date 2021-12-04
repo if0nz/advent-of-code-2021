@@ -1,19 +1,17 @@
-package it.ifonz.puzzles;
+package it.ifonz.puzzles.optimized;
 
 import java.io.IOException;
 import java.time.Instant;
 
-import it.ifonz.common.AbstractDay;
-
-public class AllDays {
-
+public class AllOpts {
+	
 	public static void main(String[] args) throws IOException {
-		AbstractDay[] days 	= new AbstractDay[]{new Day01(), new Day02(), new Day03(), new Day04()};
+		Opt[] days 	= new Opt[]{new Opt01(), new Opt02(), new Opt03(), new Opt04()};
 		for (var d : days) {
 			var begin = Instant.now().toEpochMilli();
-			d.run();
+			d.combo();
 			System.out.println(d.getClass().getSimpleName()+" Exec time -> "+(Instant.now().toEpochMilli()-begin)+" ms");
 		}
 	}
-	
+
 }
