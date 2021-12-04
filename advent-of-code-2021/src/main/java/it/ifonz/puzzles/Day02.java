@@ -8,7 +8,7 @@ import it.ifonz.common.FileReader;
 
 public class Day02 extends AbstractDay {
 
-	static List<String> lines;
+	protected static List<String> lines;
 
 	public static void main(String[] args) throws IOException {
 		
