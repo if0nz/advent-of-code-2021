@@ -8,7 +8,7 @@ import it.ifonz.common.AbstractDay;
 public class AllDays {
 
 	public static void main(String[] args) throws IOException {
-		AbstractDay[] days 	= new AbstractDay[]{new Day01(), new Day02(), new Day03(), new Day04(), new Day05(), new Day06(), new Day07()};
+		AbstractDay[] days 	= new AbstractDay[]{new Day01(), new Day02(), new Day03(), new Day04(), new Day05(), new Day06(), new Day07(), new Day08()};
 		for (var d : days) {
 			var begin = Instant.now().toEpochMilli();
 			d.run();

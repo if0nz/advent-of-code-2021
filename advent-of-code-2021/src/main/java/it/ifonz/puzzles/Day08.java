@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import it.ifonz.common.AbstractDay;
 import it.ifonz.common.FileReader;
@@ -38,45 +40,83 @@ public class Day08 extends AbstractDay {
 	}
 
 	public void part2() {
-		values.forEach(s -> System.out.println(getPatterns(s)));
+		var x = lines.stream().mapToInt(l -> {
+			var sv = l.split(" \\| ");
+			var value = sv[1];
+			var patterns = getPatterns(l);
+			var sb = new StringBuilder();
+			for (var n : value.split(" ")) {
+				sb.append(IntStream.range(0, 10).filter(i -> isAnagramCounting(n, patterns.get(i))).findFirst().getAsInt());
+			}
+			return Integer.valueOf(sb.toString());
+		}).sum();
+		System.out.println(x);
 	}
 
-	private ArrayList<String> getPatterns(String value) {
-		var pattern = new ArrayList<String>();
-		for (var i = 0; i < 7; i++) {
-			pattern.add("abcdefg");
-		}
-		Arrays.stream(value.split(" ")).filter(v -> Arrays.asList(2, 4, 3, 7).contains(v.length())).forEach(token -> {
+	private List<String> getPatterns(String value) {
+		
+		String one = "", four = "", seven = "", zero = "", eight = "", nine = "", six = "", two = "", three = "", five = "";
+		List<String> filtered = Arrays.stream(value.split(" ")).filter(v -> Arrays.asList(2, 4, 3, 7).contains(v.length())).collect(Collectors.toList());
+		for (var token : filtered) {
 			switch (token.length()) {
 			case 2:
-				token.chars().forEach(c -> {
-					pattern.get(0).replace(Character.toString(c), "");
-					pattern.get(1).replace(Character.toString(c), "");
-					pattern.get(3).replace(Character.toString(c), "");
-					pattern.get(4).replace(Character.toString(c), "");
-					pattern.get(6).replace(Character.toString(c), "");
-				});
+				one = token;
 				break;
 			case 3:
-				token.chars().forEach(c -> {
-					pattern.get(1).replace(Character.toString(c), "");
-					pattern.get(3).replace(Character.toString(c), "");
-					pattern.get(4).replace(Character.toString(c), "");
-					pattern.get(5).replace(Character.toString(c), "");
-				});
+				seven = token;
 				break;
 			case 4:
-				token.chars().forEach(c -> {
-					pattern.get(0).replace(Character.toString(c), "");
-					pattern.get(4).replace(Character.toString(c), "");
-					pattern.get(6).replace(Character.toString(c), "");
-				});
+				four = token;
 				break;
+			case 7:
+				eight = token;
 			default:
 				break;
 			}
-		});
-		return pattern;
+		}
+		
+		// identify zero, six, nine
+		List<String> size6 = Arrays.stream(value.split(" ")).filter(v -> v.length() == 6).collect(Collectors.toList());
+		for (var n : size6) {
+			if (four.chars().filter(c -> n.contains(Character.toString(c))).count() == 4) // it's 9 
+				nine= n;
+			else if (one.chars().filter(c -> n.contains(Character.toString(c))).count() == 2) // it's 0
+				zero = n;
+			else // it's 6
+				six = n;
+		}
+		
+		// identify two, three, five
+		List<String> size5 = Arrays.stream(value.split(" ")).filter(v -> v.length() == 5).collect(Collectors.toList());
+		for (var n : size5) {
+			if (nine.chars().filter(c -> n.contains(Character.toString(c))).count() == 5) {// it's 3 or 5
+				if (one.chars().filter(c -> n.contains(Character.toString(c))).count() == 2) // it's 3
+					three = n;
+				else
+					five = n; // it's 5
+			} else // it's 2
+				two = n;
+			
+		}
+		return Arrays.asList(zero,one,two,three,four,five,six,seven,eight,nine);
 	}
 
+	// thx baeldung
+	private boolean isAnagramCounting(String string1, String string2) {
+		var CHARACTER_RANGE= 256;
+	    if (string1.length() != string2.length()) {
+	        return false;
+	    }
+	    int count[] = new int[CHARACTER_RANGE];
+	    for (int i = 0; i < string1.length(); i++) {
+	        count[string1.charAt(i)]++;
+	        count[string2.charAt(i)]--;
+	    }
+	    for (int i = 0; i < CHARACTER_RANGE; i++) {
+	        if (count[i] != 0) {
+	            return false;
+	        }
+	    }
+	    return true;
+	}
 }
