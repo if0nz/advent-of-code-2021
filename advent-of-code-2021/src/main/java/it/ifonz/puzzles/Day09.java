@@ -60,35 +60,6 @@ public class Day09 extends AbstractDay {
 	public void part2() {
 		var basins = new ArrayList<Integer>();
 		var len = flows.get(0).length();
-//		for (var i = 0; i < flows.size(); i++) { // vertical index
-//			for (var j = 0; j < len; j++) { // horizontal index
-//				var current = flows.get(i).charAt(j);
-//				if (check(current, i, j + 1) && check(current, i, j - 1) && check(current, i - 1, j)
-//						&& check(current, i + 1, j)) {
-//					int basinSize = 1;
-//					var z = 0;
-//					// find left
-//					while (j - (++z) > 0 && flows.get(i).charAt(j-z) < '9') {
-//						basinSize++;
-//					}
-//					z = 0;
-//					// find right
-//					while (j + (++z) < len && flows.get(i).charAt(j+z) < '9') {
-//						basinSize++;
-//					}
-//					// find up
-//					z = 0;
-//					while (i-(++z) > 0 && flows.get(i-z).charAt(j) < '9') {
-//						basinSize++;
-//					}
-//					// find down
-//					while (i+(++z) < flows.size() && flows.get(i+z).charAt(j) < '9') {
-//						basinSize++;
-//					}
-//					basins.add(basinSize);
-//				}
-//			}
-//		}
 		
 		for (var i = 0; i < flows.size(); i++) { // vertical index
 			for (var j = 0; j < len; j++) { // horizontal index
